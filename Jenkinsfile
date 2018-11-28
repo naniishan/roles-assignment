@@ -1,25 +1,35 @@
-pipeline {
+pipeline 
+{
 agent any
-   parameters {
-        choice(
-            choices: ['java' , 'nginx', 'mysql' , 'postgres' , 'tomcat'],
-            description: '',
-            name: 'package')
-    }
-
-
-   stages {
-        stage ('select') {
-            when {
-                
-                expression { params.package == 'java' }
-            }
-            steps {
-                ansiblePlaybook become: true, inventory: '/etc/ansible/hosts', playbook: 'java.yml'
-
-            }
-        }
-    }
-
+parameters 
+{
+booleanParam (defaultvalue: true, name: 'java', description: java)
+booleanParam (defaultvalue: false, name: 'nginx', description: nginx)
+booleanParam (defaultvalue: false, name: 'postgres', description: postgres)
+booleanParam (defaultvalue: false, name: 'mysql', description: mysql)
+booleanParam (defaultvalue: false, name: 'tomcat', description: tomcat)
 }
 
+stages 
+{
+stage [] 
+{
+steps 
+{
+git 'https://github.com/naniishan/roles-assignment.git'
+}
+}
+stage []
+{
+when 
+
+{
+expression { ${params.java} == 'true' }
+}
+steps 
+{
+ansiblePlaybook inventory: '/etc/ansible/hosts', playbook: 'java.yml'
+}
+}
+
+}
