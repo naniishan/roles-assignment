@@ -12,14 +12,14 @@ booleanParam (defaultvalue: false, name: 'tomcat', description: tomcat)
 
 stages 
 {
-stage [] 
+stage ('git') 
 {
 steps 
 {
 git 'https://github.com/naniishan/roles-assignment.git'
 }
 }
-stage []
+stage ('select')
 {
 when 
 
@@ -32,4 +32,5 @@ ansiblePlaybook inventory: '/etc/ansible/hosts', playbook: 'java.yml'
 }
 }
 
+}
 }
