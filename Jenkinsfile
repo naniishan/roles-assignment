@@ -1,37 +1,25 @@
 pipeline {
 agent any
-
-properties([parameters([choice(choices: ['nginx,java,tomcat,mysql,postgres'], description: '', name: 'select')])])
-
-
-
-stage ('select'){
-stages {
-
+   parameters {
+        choice(
+            choices: ['java' , 'nginx', 'mysql' , 'postgres' , 'tomcat'],
+            description: '',
+            name: 'package')
+    }
 
 
-stage ('print'){
-steps {
-    when {
-          
-                expression { params.select == 'java' }
+   stages {
+        stage ('select') {
+            when {
+                
+                expression { params.package == 'java' }
             }
+            steps {
+                ansiblePlaybook become: true, inventory: '/etc/ansible/hosts', playbook: 'java.yml'
 
-steps {
-
-ansiblePlaybook become: true, inventory: '/etc/ansible/hosts', playbook: 'java.yml'
-
-
-}
-}
-}
-
-
-s
+            }
+        }
+    }
 
 }
 
-
-
-
-}
