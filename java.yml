@@ -1,0 +1,6 @@
+---
+ - hosts: all
+   become: yes
+   tasks:
+    - name: install cowsay
+      apt: name=cowsay state=present update_cache=yes
