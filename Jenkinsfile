@@ -5,7 +5,7 @@ properties([parameters([choice(choices: ['nginx,java,tomcat,mysql,postgres'], de
 
 
 
-#stage ('select'){
+stage ('select'){
 stages {
 
 
